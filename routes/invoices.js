@@ -5,6 +5,7 @@ const invoices = require('../controllers/invoices');
 
 router.get('/', invoices.getAll);
 router.get('/:id', invoices.getSingle);
+router.get('/generate_pdf/:id', invoices.generatePdf);
 
 router.post('/', invoices.addNew);
 

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Template</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+      .margin-0 {
+        margin: 0 !important;
+      }
+      
+      p {
+        margin: 0;
+      }
+
+      .logo-container{
+        width: 300px;
+        height: 180px;
+        /* margin: 0 auto; */
+        margin-right: auto;
+      }
+
+      .logo{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .flex {
+        display: flex; display: -webkit-flex;
+        /* display: flex; */
+        align-items: center;
+      }
+      .flex-item {
+        flex: 1;
+      }
+      .justify-between {
+        justify-content: space-between;
+      }
+      .justify-right {
+        justify-content: end;
+      }
+      .gap-2 {
+        gap: 1rem;
+      }
+
+      .text-end {
+        text-align: end !important;
+      }
+
+      .text-bold {
+        font-weight: bold !important;
+      }
+
+      tr, th {
+        text-align: center !important;
+      }
+
+      td{
+        border: none !important;
+      }
+
+      .w-3 {
+        width: 3rem;
+      }
+
+      .border-top {
+        width: 6rem;
+        border-top: 3px solid lightgray !important;
+        border-radius: 1rem;
+        /* height: 6px; */
+        margin-left: auto;
+        margin-top: 4px;
+        margin-bottom: 4px;
+      }
+
+      .float-left {
+        float: left;
+      }
+      .float-right {
+        float: right;
+      }
+      .clearfix:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+      }
+      .clearfix {
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container py-5">
+      <div class="row mb-5">
+        <div class="col-xs-8 text-right">
+          <div class="logo-container text-right">
+            <img src="./secondary-horizontal-black_white-2.png" class="logo" alt="logo">
+          </div>
+        </div>
+        <div class="col-xs-4 ">
+          <p>
+            {{company.company_name}}
+          </p>
+          <p>
+           {{company.company_address}}
+          </p>
+          <p>
+            {{company.company_phone}}
+          </p>
+          <p>
+            {{company.company_email}}
+          </p>
+          <p>
+            {{company.company_tax_number}}
+          </p>
+          <p>
+            {{company.company_bank}}
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-4">
+          <p>
+            {{ client.client_name }}
+          </p>
+          <p>
+            {{ client.address }}
+          </p>
+          <p>
+            {{ client.email }}
+          </p>
+          <p>
+            {{ client.social_security_number }}
+          </p>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-xs-8"></div>
+        <div class="col-xs-12">
+          <h4 class="text-end">
+            Фактура {{ invoice_number }}
+          </h4>
+          <!-- class="flex gap-2 justify-right" -->
+          <div class="float-right">
+            <b>Дата на издавање:</b>
+            <span>{{ issue_date }}</span>
+          </div>
+          <br>
+          <div class="float-right">
+            <b>Дата на доспевање:</b>
+            <span>{{ due_date }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <table class="table table-condensed mb-3">
+          <thead>
+            <tr>
+              <th>КОД</th>
+              <th>ИМЕ НА СТАВКА</th>
+              <th>КОЛИЧИНА</th>
+              <th>ЦЕНА</th>
+              <th>ДДВ %</th>
+              <th>ИЗНОС</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {{#each items}}
+            <tr>
+              <td>{{ this.code }}</td>
+              <td>{{ this.name }}</td>
+              <td>{{ this.quantity }}</td>
+              <td>{{ this.price }}</td>
+              <td>0%</td>
+              <td>{{ this.price }}</td>
+            </tr>
+            {{/each}}
+
+            <!-- <tr>
+              <td>003</td>
+              <td>Услуга</td>
+              <td>1</td>
+              <td>3000</td>
+              <td>0%</td>
+              <td>3000</td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-xs-8"></div>
+        <div class="col-xs-12">
+          <div class="clearfix"></div>
+          <div class="float-right">
+            <b class="text-end text-bold">Вкупно без ДДВ:</b>
+            <span class="text-end">7000</span>
+          </div>
+          <br>
+          <div class="float-right">
+            <b class="text-end text-bold">ДДВ:</b>
+            <span class="w-3 text-end">0</span>
+          </div>
+          <br>
+          <div class="border-top"></div>
+          <div class="float-right">
+            <b class="text-end text-bold">Вкупно:</b>
+            <span class="w-3 text-end">7000</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-xs-4">
+          <div class="d-flex-col">
+            <h6>Фактурирал</h6>
+            <p>______________________________</p>
+          </div>
+        </div>
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4">
+          <div class="d-flex-col">
+            <h6>Примил</h6>
+            <p>______________________________</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-xs-8">
+          <span>* Обврзникот не е ДДВ обврзник.</span>
+        </div>
+      </div>
+    </div>    
+  </body>
+</html>

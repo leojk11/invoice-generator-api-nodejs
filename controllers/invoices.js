@@ -6,6 +6,95 @@ const { generateInvoice } = require('../helpers/generateModels');
 
 const { ErrorKind } = require('../enums/errorKind');
 
+const fs = require("fs");
+const path = require("path");
+const puppeteer = require('puppeteer');
+const handlebars = require("handlebars");
+
+var pdf = require("pdf-creator-node");
+
+exports.generatePdf = async (req, res) => {
+
+  const id = req.params.id;
+
+  if (id) {
+    try {
+      const invoice = await Invoice.findById(id);
+      if (invoice) {
+        // console.log('invoice', invoice);
+        const data = {
+          company: {
+            company_name: 'test company name',
+            company_address: 'test company address',
+            company_phone: 'test company phone',
+            company_email: 'test company email',
+            company_tax_number: 'test company tax number',
+            company_bank: 'test company account',
+          },
+          ...invoice._doc
+        };
+
+        var templateHtml = fs.readFileSync(path.join(process.cwd(), '/invoice-template/invoice-template.html'), 'utf8');
+        const document = {
+          html: templateHtml,
+          data,
+          path: './invoices/' + `${ invoice._id }.pdf`
+        };
+      
+        const options = {
+          formate: 'A4',
+          orientation: 'landscape',
+          border: '2mm',
+        };
+
+        pdf.create(document, options).then(() => {
+          const fileToSendOptions = {
+            root: path.join(process.cwd(), '/invoices/')
+          };
+
+          res.sendFile(`${ invoice._id }.pdf`, fileToSendOptions, function (err) {
+            if (err) {
+              res.status(statusCodes.server_error).json({
+                message: errorMessages.internal,
+                err
+              });
+            } else {
+            }
+          });
+
+          // res.status(statusCodes.success).send('invoice has been generated');
+        }).catch(error => {
+          console.log('error', error)
+          res.status(statusCodes.server_error).json({
+            message: errorMessages.internal,
+            error
+          });
+        });
+      } else {
+        res.status(statusCodes.user_error).json({
+          message: errorMessages.not_exist('Invoice', id)
+        });
+      }
+    } catch (error) {
+      console.log('error', error)
+      if(error.kind === ErrorKind.ID) {
+        res.status(statusCodes.user_error).json({
+          message: errorMessages.invalid_id(id)
+        });
+      } else {
+        res.status(statusCodes.server_error).json({
+          message: errorMessages.internal,
+          error
+        });
+      }
+    }
+  } else {
+    res.status(statusCodes.user_error).json({
+      message: errorMessages.id_missing
+    });
+  }
+}
+
 exports.getAll = async (req, res) => {
 
   let skip = 0;
@@ -169,3 +258,4 @@ exports.delete = async (req, res) => {
     });
   }
 }
+
