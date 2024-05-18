@@ -51,7 +51,9 @@ exports.generateInvoice = (invoice) => {
     due_date: invoice.due_date,
     items: invoice.items,
     invoice_number: invoice.invoice_number,
-    total: invoice.total
+    price: invoice.price,
+    tax: invoice.tax,
+    total_price: invoice.total_price
   };
 
   return newInvoice;
@@ -64,7 +66,8 @@ exports.generateUser = (user) => {
     lastname: user.lastname,
     fullname: `${ user.firstname } ${ user.lastname }`,
     email: user.email,
-    company_id: user.company_id
+    company_id: user.company_id,
+    registration_date: user.registration_date
   };
 
   return newUser;

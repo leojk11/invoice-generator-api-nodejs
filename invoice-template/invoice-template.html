@@ -139,28 +139,28 @@
       <div class="row mx-1 mb-3">
         <div class="col-xs-8 text-right">
           <div class="logo-container text-right">
-            <img src="./secondary-horizontal-black_white-2.png" class="logo" alt="logo">
+            <img src="https://i.postimg.cc/jnYWmBRt/secondary-horizontal-black-white-2.png'" class="logo" alt="logo">
           </div>
         </div>
         <div class="col-xs-4 ">
 
           <p>
-            {{company.company_name}}
+            {{company.name}}
           </p>
           <p>
-           {{company.company_address}}
+           {{company.address}}
           </p>
           <p>
-            {{company.company_phone}}
+            {{company.phone_number}}
           </p>
           <p>
-            {{company.company_email}}
+            {{company.email}}
           </p>
           <p>
-            {{company.company_tax_number}}
+            {{company.bank_account}}
           </p>
           <p>
-            {{company.company_bank}}
+            {{company.bank_name}}
           </p>
         </div>
       </div>
@@ -222,8 +222,8 @@
               <td>{{ this.code }}</td>
               <td>{{ this.name }}</td>
               <td>{{ this.quantity }}</td>
-              <td>{{ this.price }}</td>
-              <td>0%</td>
+              <td>{{ this.price }} {{ currency }}</td>
+              <td>{{ this.tax }}%</td>
               <td>{{ this.price }}</td>
             </tr>
             {{/each}}
@@ -237,18 +237,18 @@
           <div class="clearfix"></div>
           <div class="float-right">
             <b class="text-end text-bold">Вкупно без ДДВ:</b>
-            <span class="w-3 text-end">7000</span>
+            <span class="w-3 text-end">{{ price }} {{ currency }}</span>
           </div>
           <br>
           <div class="float-right mb-1">
             <b class="text-end text-bold">ДДВ:</b>
-            <span class="w-3 text-end">0</span>
+            <span class="w-3 text-end">{{ tax }} {{ currency }}</span>
           </div>
           <br>
           <div class="border-top mb-1"></div>
           <div class="float-right mb-3">
             <b class="text-end text-bold" style="font-size: 22px;">Вкупно:</b>
-            <span class="w-3 text-end">7000</span>
+            <span class="w-3 text-end">{{ total_price }} {{ currency }}</span>
           </div>
         </div>
       </div>

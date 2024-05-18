@@ -16,8 +16,17 @@ const InvoiceSchema = new mongoose.Schema({
   invoice_number: {
     type: String
   },
-  total: {
+  price: {
     type: Number
+  },
+  tax: {
+    type: Number
+  },
+  total_price: {
+    type: Number
+  },
+  currency: {
+    type: String
   }
 });
 

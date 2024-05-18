@@ -15,7 +15,11 @@ const UserSchema = new mongoose.Schema({
   },
   company_id: {
     type: String,
-  }
+  },
+
+  registration_date: {
+    type: String
+  },
 });
 
 const User = mongoose.model('User', UserSchema);
