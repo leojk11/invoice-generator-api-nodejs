@@ -21,7 +21,6 @@ exports.login = async (req, res) => {
   } else {
     try {
       const users = await User.find({ email: data.email });
-      console.log(users);
       if (users.length === 0) {
         res.status(statusCodes.user_error).json({
           message: `User with email [${ data.email }] does not exist.`
@@ -45,7 +44,6 @@ exports.login = async (req, res) => {
         }
       }
     } catch (error) {
-      console.log('error', error);
       res.status(statusCodes.server_error).json({
         message: errorMessages.internal_tr,
         actual_message: errorMessages.internal,

@@ -6,6 +6,8 @@ const { generateCompany } = require('../helpers/generateModels');
 
 const { ErrorKind } = require('../enums/errorKind');
 
+const { getLoggedInUser } = require('../middlewares/common');
+
 exports.getAll = async (req, res) => {
 
   let skip = 0;
@@ -90,6 +92,13 @@ exports.addNew = async (req, res) => {
       });
     }
   }
+}
+
+exports.createCompanyByUser = async (req, res) => {
+  
+	const loggedInUser = getLoggedInUser(req);
+
+  
 }
 
 exports.update = async (req, res) => {
