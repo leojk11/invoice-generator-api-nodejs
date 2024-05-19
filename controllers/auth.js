@@ -86,7 +86,7 @@ exports.register = async (req, res) => {
         });
       } else {
         if (PASSWORD_REGEX.test(data.password)) {
-          data['password'] = bcrypt.hashSync(req.body.password, 20);
+          data['password'] = bcrypt.hashSync(req.body.password, 10);
 
           const newUser = await User.insertMany(data);
           res.status(statusCodes.success).json({
