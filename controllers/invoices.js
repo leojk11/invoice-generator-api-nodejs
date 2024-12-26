@@ -185,7 +185,7 @@ exports.generatePdf = async (req, res) => {
       if (invoice) {
         // will be dynamic from logged in user
         const company = await Company.findById('653eb8c6ba68880f3ac59ac2');
-        console.log('company', company);
+        // console.log('company', company);
         const data = {
           company: company._doc,
           ...invoice._doc
@@ -209,6 +209,7 @@ exports.generatePdf = async (req, res) => {
             root: path.join(process.cwd(), '/invoices/')
           };
 
+          res.contentType("application/pdf");
           res.sendFile(`${ invoice._id }.pdf`, fileToSendOptions, function (err) {
             if (err) {
               res.status(statusCodes.server_error).json({
